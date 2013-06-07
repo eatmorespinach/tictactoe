@@ -1,42 +1,27 @@
-#a tic tac to board is drawn. This will be either a 3d array or 3d hash
-
-#grid = [[1,2,3], [4,5,6], [7,8,9]]
-
-#replace array values with X or O
-
-#grid = [[1,2,X], [4,5,6], [7,8,9]]
-
-#check for winning row 
-
-
-#player one enters a number between 1 and 9 
-
-#the number in array then gets crossed out with X
-
-#terminal then switches between X and O
-
-#player two enters a number between 1 and 9, the number in array then gets crosses out with X
-
-
 class Tictactoe
 
   attr_accessor :grid, :chances
 
   def initialize()
     @chances = 9
-    # @word    = LIST.sample
-    @grid = setup_grid
-
+    @grid = [[], [], []]
+    setup_grid
   end
   
   def setup_grid
-  		@grid = [[1,2,3], [4,5,6], [7,8,9]]
+  		#@grid = [[1,2,3], [4,5,6], [7,8,9]]
+  		 i = 0
+  		(0..2).each do |y|
+  			(0..2).each do |x|
+  				i += 1
+  				@grid[x][y] = i
+  			end
+  		end
   end
 
-
   def draw_board 	 
- 	 	(0..2).each do |x|
-			(0..2).each do |y|
+ 	 	(0..2).each do |y|
+			(0..2).each do |x|
 				print @grid[x][y]
 			end
 			print "\n"
@@ -52,29 +37,44 @@ class Tictactoe
 		when 1
 			return [0,0]
 		when 2
-			return [0,1]
-		when 3
-			return [0,2]
-		when 4
 			return [1,0]
+		when 3
+			return [2,0]
+		when 4
+			return [0,1]
 		when 5
 			return [1,1]
 		when 6 
-			return [1,2]
-		when 7
-			return [2,0]
-		when 8 
 			return [2,1]
+		when 7
+			return [0,2]
+		when 8 
+			return [1,2]
 		when 9
 			return [2,2]
 		end
 	end
 
+  def check_for_win(pos1, pos2, pos3)
+  		coords1 = pos_to_coords(pos1)
+  		coords2 = pos_to_coords(pos2)
+  		coords3 = pos_to_coords(pos3)
+  		x1 = coords1[0]
+  		y1 = coords1[1]
+  		x2 = coords2[0]
+  		y2 = coords2[1]
+  		x3 = coords3[0]
+  		y3 = coords3[1]
+  		if (grid[x1][y1] == grid[x2][y2] && grid[x2][y2] == grid[x3][y3])
+  			return true
+  		else
+  			return false
+  		end
+  	end
 
 	#checks grid at element position. If there's number, spot is open, else spot is taken
   def grid_has?(position)
-  	pos = position
-  	coords = pos_to_coords(pos)
+  	coords = pos_to_coords(position)
   	x = coords[0]
   	y = coords[1]
 
@@ -85,11 +85,8 @@ class Tictactoe
   	end
   end
 
-
-
  def put_mark_on_board(position, player)
-  	pos = position
-  	coords = pos_to_coords(pos)
+  	coords = pos_to_coords(position)
   	x = coords[0]
   	y = coords[1]
 
@@ -112,104 +109,27 @@ class Tictactoe
     return false
   end
 
+  def tie?
+  	@chances == -1 ? true : false
+  end
 
   def win?
-  	# check(check_coords[0][0],check_coords[0][1],check_coords[0][2])
+  	# Attempt to check horizontals
+ 	(0..2).each do |y|
+ 		if (@grid[0][y] == @grid[1][y] && @grid[1][y] == @grid[2][y])
+ 			return true
+ 		end
+ 	end
 
-  	
-  	#grid = [[1,2,3], [4,5,6], [7,8,9]]
+ 	# Attempt to check verticals
+ 	(0..2).each do |x|
+ 		if (@grid[x][0] == @grid[x][1] && @grid[x][1] == @grid[x][2])
+ 			return true
+ 		end
+ 	end
 
-  	#horizontal
-
-  	(0..2).each do |i|
-			if grid[i][0] == grid[i][1] && grid[i][1] == grid[i][2]
-				return true
-				break
-			elsif grid[0][i] == grid[1][i] && grid[1][i] == grid[2][i]
-				return true
-				break
-			elsif grid[0][0] == grid[1][1] && grid[2][2] == grid[3][3]
-				return true
-				break
-			elsif
-				grid[0][2] == grid[1][1] && grid[1][1] == grid[2][0]
-				return true
-				break
-			else 
-				return false
-			end
-		end
-	end
-
-# 	def check_coords (a, b, c)
-# 		if (a == b)
-# 			if (b == c)
-# 				return true
-# 			end
-# 		else
-# 			return false
-# 		end
-# 	end
-
-#   def tie?
-#     if counter == 0
-#       	return true
-#   	end
-#   end
+ 	# check diagonals
+ 	(check_for_win(1,5,9) || check_for_win(3,5,7)) ? true : false
+  end
 
 end
-
-
-
-
-  # 	if gridarray[0][0] && gridarray[0][1] && gridarray[0][2] == "X" || "O"
-  # 		return true 
-  # 	# if gridarray[0][0] && gridarray[0][1] && gridarray[0][2] == "X" || "O"
-  # 	# 	return true 
-  # 	elsif gridarray[1][0] == gridarray[1][1] == gridarray[1][2]
-  # 		return true
-  # 	elsif gridarray[2][0] == gridarray[2][1] == gridarray[2][2]
-		# 	return true
-		
-		# #vertical 3 in a rows
-		# elsif gridarray[0][0] == gridarray[1][0] == gridarray[2][0] 
-		# 	return true
-		# elsif gridarray[0][1] == gridarray[1][1] == gridarray[2][1]
-		# 	return true
-		# elsif gridarray[0][2] == gridarray[1][2] == gridarray[2][2]
-		
-		# #diagonal 3 in a rows
-		# elsif gridarray[0][0] == gridarray[1][1] == gridarray[2][2]
-		# 	return true
-		# elsif gridarray[0][2] == gridarray[1][1] == gridarray[2][0]
-		# 	return true
-		# else
-		# 	return false
-  # end
-
-
-   # 	#horizontal 3 in a rows	
-		# (0..2).each do |y|
-		# 	first_column = grid[0][y]
-		# 	won = true
-		# 	(0..2).each do |x| 
-		# 		won = won && (grid[x][y] == first_column)
-		# 	end
-		# 		return true if won
-		# end
-
-		# #horizontal 3 in a rows
-		# (0..2).each do |x|
-		# 	first_row = grid[0][x]
-		# 		won = true
-		# 	(0..2).each do |x|
-		# 		won = won && (grid[x][y] == first_row)
-		# 	end
-		# 		return true if won
-		# end
-
-		# diagonal 3 in a rows
-		# (0..2).each do |i|
-		# 	if grid[i][x] = grid[x][i]
-		# 		return true if won
-	
