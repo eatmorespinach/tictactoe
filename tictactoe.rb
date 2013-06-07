@@ -9,27 +9,27 @@ class Tictactoe
   end
   
   def setup_grid
-  		#@grid = [[1,2,3], [4,5,6], [7,8,9]]
-  		 i = 0
-  		(0..2).each do |y|
-  			(0..2).each do |x|
-  				i += 1
-  				@grid[x][y] = i
-  			end
-  		end
+  	#@grid = [[1,2,3], [4,5,6], [7,8,9]]
+    i = 0
+  	(0..2).each do |y|
+  		(0..2).each do |x|
+  			i += 1
+  			@grid[x][y] = i
+			end  		
+    end
   end
 
   def draw_board 	 
- 	 	(0..2).each do |y|
-			(0..2).each do |x|
-				print @grid[x][y]
+ 	  (0..2).each do |y|
+		  (0..2).each do |x|
+        print @grid[x][y]
 			end
-			print "\n"
+		  print "\n"
 		end
 	end
 
 	def which_player?
-		@chances % 2 == 0 ? 2 : 1
+		@chances % 2 == 0 ? 2 : 1  #if chances turn is odd, player 1 will display
 	end
 
 	def pos_to_coords(position)

@@ -3,9 +3,9 @@ require_relative "tictactoe"
 
 class TictactoeRunner
 
-  # Starts the tictactoe game
   def self.run 
-    @game = Tictactoe.new()
+    @game = Tictactoe.new() #starts a new game
+    
     while true
     	player = @game.which_player?
 	 	loop do
@@ -29,7 +29,7 @@ class TictactoeRunner
 	 		puts "\n\nGame tied! \n"	
 	     	break
 	    end
-	    puts "\n\n+++++++++++++++++++++++++++++++++++++++++++++++++++"
+	    puts "------------"
     end
   end
 end 
