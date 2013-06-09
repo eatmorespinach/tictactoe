@@ -1,6 +1,5 @@
 require_relative "tictactoe"
 
-
 class TictactoeRunner
 
   def self.run 
@@ -10,7 +9,7 @@ class TictactoeRunner
     	player = @game.which_player?
 	 	loop do
 	 		@game.draw_board
-	 		puts "------------"
+	 		puts "--------------------------------"
 	 		print "Player #{player} choose your position: "
 	 		position = gets.chomp.to_i
 	 		retrytictac = @game.move(position,player)

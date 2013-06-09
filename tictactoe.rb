@@ -19,15 +19,19 @@ class Tictactoe
     end
   end
 
-  def draw_board 	 
+  def draw_board
+    print "\n"
+    print " " 	 
  	  (0..2).each do |y|
 		  (0..2).each do |x|
         print @grid[x][y]
+        print " "
 			end
-		  print "\n"
+		  print "\n\n "
 		end
 	end
 
+  #prints 1 2 3 on first line with |x| .each line, then 4 5 6 on 2nd line.  
 	def which_player?
 		@chances % 2 == 0 ? 2 : 1  #if chances turn is odd, player 1 will display
 	end
